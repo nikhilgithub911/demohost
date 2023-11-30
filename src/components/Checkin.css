@@ -1,0 +1,17 @@
+.checkoutComponent{
+    /* background-color: #B0C4DE; */
+    
+    
+    text-align:left;
+    margin-left: 5px;
+    /* width: 25vw; */
+    padding: 7px;
+    /* padding-top: 4px; */
+    padding-left: 6px;
+    margin-bottom: 2px;
+    border-radius: 2%;
+    border: 2px solid #0066b2;
+    border-style: solid;
+
+    /* background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%) */
+}

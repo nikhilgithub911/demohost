@@ -1,0 +1,70 @@
+/* Pop.css */
+
+.modalContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: 400px;
+    /* background-color: #ffffff; */
+    background-image: linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);    display: flex;
+    background-image: radial-gradient(circle 248px at center, #16d9e3 0%, #30c7ec 47%, #46aef7 100%);    border-radius: 8px;
+    
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .modalTitle {
+    color: #fff;
+    font-weight: 100;
+    /* font-weight: bold; */
+}
+  
+  @media only screen and (min-width:992px){
+    .modalContainer{
+        width: 38vw;
+        height: 45vh;
+    }
+    .modalTitle {
+        font-size:37px;
+      }
+  }
+  @media only screen and (max-width:600px){
+    .modalContainer{
+        width: 90vw;
+        height: 45vh;
+    }
+    .modalTitle {
+        font-size:29px;
+      }
+    .modalDescription{
+        margin-top: 6px;
+        font-size: 18px;
+    }  
+    .modalImage{
+        width: 40vw;
+        height: 40vw;
+    }
+  }
+
+  @media only screen and (min-width:600px) and (max-width:992px){
+    .modalContainer{
+        width: 70vw;
+        height: 45vh;
+    }
+    .modalTitle {
+        font-size:29px;
+      }
+    .modalDescription{
+        margin-top: 6px;
+        font-size: 18px;
+    }  
+    .modalImage{
+        width: 27vw;
+        height: 20vh;
+    }
+  
+
+  }
+ 

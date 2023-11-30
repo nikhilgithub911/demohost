@@ -1,0 +1,56 @@
+<Grid item xs={12} sm={6} md={4} lg={4}>
+<Autocomplete
+  disablePortal
+  id="combo-box-demo"
+  sx={{ width: "100%", mt: "10px" }}
+  options={cities}
+  fullWidth
+  freeSolo={false}
+  // value={formData.city ? formData.city : null} // Update here
+  value={
+    formData.city && cities.some((city) => city.id === formData.city.id)
+      ? formData.city
+      : null
+  }
+  onInputChange={(event, newValue) => {
+    const formCityId = formData.city
+      ? formData.city.id
+      : null;
+    const formStateId = formData.stateId;
+    const selectedCity = cities.find(
+      (city) => city.name === newValue
+    );
+    const cityId = selectedCity
+      ? selectedCity.id
+      : formCityId || null;
+    const stateId = selectedCity
+      ? selectedCity.state.id
+      : formStateId || null;
+
+    setFormData({
+      ...formData,
+      city: {
+        id: cityId,
+        name: newValue,
+      },
+      stateId: stateId,
+    });
+  }}
+  getOptionLabel={(option) => option.name || ""}
+  renderOption={(props, option) => (
+    <li {...props} key={option.id}>
+      {option.name}
+    </li>
+  )}
+  renderInput={(params) => (
+    <TextField
+      {...params}
+      label="Visitor's City"
+      id={formData.city ? String(formData.city.id) : ""}
+      value={formData.city ? formData.city.name : ""} // Update here
+      required
+    />
+  )}
+  isOptionEqualToValue={(option, value) => option.id === value.id}
+/>
+</Grid>

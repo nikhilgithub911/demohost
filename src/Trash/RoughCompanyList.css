@@ -1,0 +1,12 @@
+.listdiv{
+    /* background-color: aqua; */
+    display: flex;
+    /* justify-content: space-around; */
+    flex-direction: column;
+
+}
+
+.listdiv2{
+    display: flex;
+    justify-content: space-between;
+}

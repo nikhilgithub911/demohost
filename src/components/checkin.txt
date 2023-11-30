@@ -1,0 +1,190 @@
+// this component is for checking out user
+
+import { Box, Button, TextField, Typography } from '@mui/material';
+import axios from 'axios';
+import React, { useState } from 'react';
+
+import { toast } from 'react-hot-toast';
+import "react-toastify/dist/ReactToastify.css";
+
+import "./Checkin.css"
+
+
+const Checkin = ({ onCloseModal }) => {
+  const [fetchedUserData, setFetchedUserData] = useState(null);
+  const [logoutmessage, setLogoutMessage] = useState(null);
+  const [phoneInput, setPhoneInput] = useState("");
+
+
+
+
+  const searchMeeting = async (event) => {
+    const visitorPhoneNumber = event.target.value;
+
+    if (visitorPhoneNumber.length === 10) {
+      try {
+        const response = await axios.get(`http://192.168.12.54:8080/api/meeting/getMeetingsToCheckout?phoneNumber=${visitorPhoneNumber}`)
+
+        if (response.status === 200 && response.data.data) {
+          setFetchedUserData(response.data.data);
+        } else if (response.data.data === null) {
+          toast('No meeting details found!',
+            {
+              icon: '👏',
+              style: {
+                borderRadius: '10px',
+                background: '#333',
+                // background:'#FF0000',
+                color: '#fff',
+              },
+            }
+          );
+          console.log(response.data.data, "response about status")
+        }
+      } catch (error) {
+        toast('User does not exist!',
+          {
+            icon: '👏',
+            style: {
+              borderRadius: '10px',
+              background: '#FF000080',
+              // background:'#FF0000',
+              color: '#fff',
+            },
+          }
+        );
+        console.error(error);
+      }
+    }
+  };
+
+  // checkout user by taking number
+  // --------------------------------------------
+  const checkoutUser = async () => {
+    try {
+      const response = await axios.get(`http://192.168.12.54:8080/api/meeting/checkout?phone=${fetchedUserData.visitor.phoneNumber}`);
+      console.log("checkout button clicked")
+      // console.log(response, "response for checking out");
+      if (response.status === 200 && response.data.data === null) {
+
+        toast.success("checkout successful")
+        setTimeout(function(){
+          window.location.reload()
+        },2000)
+
+      }
+
+    } catch (error) {
+      console.error(error);
+      toast(" already checked out", {
+        position: "top-center",
+        autoClose: 800,
+      });
+    }
+  };
+
+
+  // converting start time to day format
+  const formatStartDate = () => {
+    if (fetchedUserData && fetchedUserData.meetingStartDateTime) {
+      const originalStartDate = new Date(fetchedUserData.meetingStartDateTime);
+      const adjustedStartDate = new Date(originalStartDate.getTime() - (5 * 60 + 30) * 60 * 1000);
+
+      return adjustedStartDate.toLocaleString();
+    }
+    return null;
+  };
+
+
+  // ---------------------handle phone length
+
+  const handleLength = (event) => {
+    const phone = event.target.value;
+    setPhoneInput(phone);
+
+    setPhoneInput(phone.slice(0, 10));
+
+  }
+  // --------------------------------------------
+
+
+  return (
+    <div className='checkoutComponent'>
+      <TextField
+        fullWidth
+        label="Phone Number"
+        variant="outlined"
+        type="number"
+        name="phoneNumber"
+        autoComplete="off"
+        onInput={searchMeeting}
+        onChange={handleLength}
+        value={phoneInput}
+      />
+      <Box mb={1}>
+        {fetchedUserData && (
+          <>
+            <Typography>
+
+              <strong> Name: </strong>
+
+              {fetchedUserData.visitor.name}</Typography>
+            <Typography>
+              <strong> Phone: </strong>
+
+              {fetchedUserData.visitor.phoneNumber}
+            </Typography>
+
+            <Typography>
+              <strong> Company: </strong>
+
+              {fetchedUserData.visitor.companyName}
+            </Typography>
+            {/* <br /> */}
+
+            {/* -------------------------------------------------------------------------------------------- */}
+
+            <Typography variant="h6" sx={{ color: "blue" }}>
+              Meeting Details:
+            </Typography>
+            <Typography>
+              <strong>Host Name: </strong>
+              {fetchedUserData.user.firstName}
+            </Typography>
+
+            <Typography>
+              <strong>Status: </strong>
+
+              {fetchedUserData.status}</Typography>
+
+            <Typography>
+              <strong>Visit Type: </strong>
+              {fetchedUserData.context}
+            </Typography>
+            <Box className="baton">
+
+
+              <Button 
+              // variant="contained"
+              variant="outlined"
+                sx={{ width: "8.5em" }}
+                onClick={checkoutUser}
+                color="primary"
+              // disabled={disable}
+              >Check out</Button>
+            </Box>
+          </>
+        )}
+
+      </Box>
+
+
+    </div>
+  );
+
+};
+
+export default Checkin;
+
+
+// reload button enabled 

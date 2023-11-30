@@ -1,0 +1,18 @@
+{
+  "name": "John Doe",
+  "phoneNumber": "9178835612",
+  "email": "mailto:smrutiranjan.rapidsoft@gmail.com",
+  "state": {
+    "id": 26
+  },
+  "city": {
+    "id": 3
+  },
+  "user": {
+    "id": 1
+  },
+  "companyName": "ABC Company",
+  "remarks": "Meeting notes",
+   "meetingStartDateTime": "2023-11-16T12:00:00",
+  "context": "BUSINESS"
+}

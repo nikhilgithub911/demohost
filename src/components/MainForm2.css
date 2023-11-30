@@ -1,0 +1,16 @@
+/* @media only screen and (max-width:375px) {
+   .img2{
+     height: 60vh;
+     gap: 2em;
+   }
+ }
+  */
+
+  @media only screen and (max-width:600px){
+   .img2{
+     width: 88vw;
+     height: 60vh;
+     margin-top: 9%;
+     /* gap: 4px; */
+   }
+ }
